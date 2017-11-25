@@ -1,0 +1,13 @@
+{
+    "name": "hcsomot/intro-into-testing-hcs-omot",
+    "authors": [
+        {
+            "name": "Tomo Šala",
+            "email": "hcs.omot@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^6.4"
+    }
+}
