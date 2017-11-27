@@ -9,5 +9,16 @@
     "require": {},
     "require-dev": {
         "phpunit/phpunit": "^6.4"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
     }
+    
 }
