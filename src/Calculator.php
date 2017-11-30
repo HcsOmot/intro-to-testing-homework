@@ -1,8 +1,7 @@
 <?php
 
-
-class Calculator {
-
+class Calculator
+{
     public function add(int $a, int $b): int
     {
         return $a + $b;
@@ -18,10 +17,8 @@ class Calculator {
         return $a * $b;
     }
 
-    public function calculateWithPercentage(float $input, float $percentage): float
+    public function calculateWithPercentage(float $amount, float $percentage): float
     {
-        return ceil($input * (100 + $percentage)/ 100);
-
-
+        return $amount + ceil($amount * $percentage) / 100.00;
     }
 }
