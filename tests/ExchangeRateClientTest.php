@@ -2,13 +2,12 @@
 
 namespace Tests;
 
-use CurrencyRatesHNBProvider;
+use \ExchangeRateClient;
 use PHPUnit\Framework\TestCase;
 
-//use Mockery;
-class CurrencyRatesHNBProviderTest extends TestCase
+class ExchangeRateClientTest extends TestCase
 {
-    /** @var CurrencyRatesHNBProvider */
+    /** @var \ExchangeRateClient */
     private $ratesProvider;
     /** @var \DateTime */
     private $today;
@@ -17,12 +16,12 @@ class CurrencyRatesHNBProviderTest extends TestCase
     {
         $this->today = new \DateTime('now');
 
-        $this->ratesProvider = new CurrencyRatesHNBProvider();
+        $this->ratesProvider = new ExchangeRateClient();
     }
 
-    public function testItCanBeInstatiated()
+    public function testItCanBeInstantiated()
     {
-        self::assertInstanceOf(CurrencyRatesHNBProvider::class, $this->ratesProvider);
+        self::assertInstanceOf(ExchangeRateClient::class, $this->ratesProvider);
     }
 
     public function testItCanRetrieveSpecificCurrencyRateForToday()
