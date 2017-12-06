@@ -47,6 +47,42 @@ class ProfitCalculatorTest extends TestCase
         ];
     }
 
-    
+    /**
+     * @param $currency
+     * @param $daysAgo
+     * @param $amount
+     * @param $expected
+     *
+     * @dataProvider provideTestCalculateProfitWorks
+     */
+    public function testCalculateProfitWorks($currency, $daysAgo, $amount, $expected)
+    {
+        $sevenDaysAgo = \Mockery::mock(\DateTime::class);
+        $today = \Mockery::mock(\DateTime::class);
+        $oneDayAgo = \Mockery::mock(\DateTime::class);
+        $twoDaysAgo = \Mockery::mock(\DateTime::class);
+        $monthAgo = \Mockery::mock(\DateTime::class);
+
+        $this->mockedDateTimeFactory->shouldReceive('getDaysAgo')->with(0)->andReturn($today);
+        $this->mockedDateTimeFactory->shouldReceive('getDaysAgo')->with(1)->andReturn($oneDayAgo);
+        $this->mockedDateTimeFactory->shouldReceive('getDaysAgo')->with(2)->andReturn($twoDaysAgo);
+        $this->mockedDateTimeFactory->shouldReceive('getDaysAgo')->with(30)->andReturn($monthAgo);
+
+        $this->mockedClient->shouldReceive('getRatesFor')->with('EUR', $today)->andReturn(100);
+        $this->mockedClient->shouldReceive('getRatesFor')->with('EUR', $oneDayAgo)->andReturn(50);
+        $this->mockedClient->shouldReceive('getRatesFor')->with('EUR', $monthAgo)->andReturn(10);
+
+        self::assertEquals($expected, $this->profitCalculator->calculateProfit($currency, $daysAgo, $amount));
+    }
+
+    public function provideTestCalculateProfitWorks()
+    {
+        return [
+            ['EUR', 0, 1, 0],
+            ['EUR', 0, 100, 0],
+            ['EUR', 1, 1, 50],
+            ['EUR', 30, 10, 900]
+        ];
+    }
 }
 
