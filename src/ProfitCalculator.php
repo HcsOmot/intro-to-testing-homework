@@ -8,29 +8,24 @@
 
 class ProfitCalculator {
 
-    protected $priceProvider;
+    protected $client;
 
-    //public function __construct(\priceProvider $priceProvider)
-    //{
-    //    $this->priceProvider = $priceProvider;
-    //}
-
-    public function calculateProfit(Int $daysAgo, Int $amount)
+    public function __construct(\ExchangeRateClient $client, \DateTimeFactory $factory)
     {
-
-        $todayDate = new \DateTime();
-        $openDate = $this->getDateFromDaysAgo($todayDate, $daysAgo);
-
-        $priceNew = $this->priceProvider->getRatesFor('EUR', $todayDate);
-        $priceOld = $this->priceProvider->getRatesFor('EUR', $openDate);
-
-        return $amount * $this->calculateDiff($priceOld, $priceNew);
-
+        $this->client = $client;
+        $this->factory = $factory;
     }
 
-    public function getDateFromDaysAgo(\DateTime $startDate, $daysAgo)
+    public function calculateProfit(String $currency,Int $daysAgo, Int $amount)
     {
-        return $startDate->sub(new DateInterval('P'. $daysAgo . 'D'))->setTime(0,0);
+        $todayDate = $this->factory->getDaysAgo(0);
+        $openingDate = $this->factory->getDaysAgo($daysAgo);
+
+
+        $openingPrice = $this->client->getRatesFor($currency, $openingDate);
+        $currentPrice = $this->client->getRatesFor($currency, $todayDate);
+
+        return $amount * $this->calculateDiff($openingPrice, $currentPrice);
     }
 
     public function calculateDiff($priceOld, $priceNew)
