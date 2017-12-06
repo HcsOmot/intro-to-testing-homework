@@ -3,6 +3,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use \ExchangeRateClient;
 
 class ProfitCalculatorTest extends TestCase
 {
@@ -89,6 +90,14 @@ class ProfitCalculatorTest extends TestCase
             ['USD', 1, 1, 50],
             ['EUR', 2, 1, -50]
         ];
+    }
+
+    public function testItCanUseRatesProvider()
+    {
+        $ratesProvider = new ExchangeRateClient();
+
+        $profitCalculator = new \ProfitCalculator($ratesProvider, $this->mockedDateTimeFactory);
+        self::assertInstanceOf(\ProfitCalculator::class, $profitCalculator);
     }
 }
 
