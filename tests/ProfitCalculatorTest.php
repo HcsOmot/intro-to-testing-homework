@@ -70,6 +70,7 @@ class ProfitCalculatorTest extends TestCase
 
         $this->mockedClient->shouldReceive('getRatesFor')->with('EUR', $today)->andReturn(100);
         $this->mockedClient->shouldReceive('getRatesFor')->with('EUR', $oneDayAgo)->andReturn(50);
+        $this->mockedClient->shouldReceive('getRatesFor')->with('EUR', $twoDaysAgo)->andReturn(150);
         $this->mockedClient->shouldReceive('getRatesFor')->with('EUR', $monthAgo)->andReturn(10);
 
         $this->mockedClient->shouldReceive('getRatesFor')->with('USD', $today)->andReturn(100);
@@ -85,7 +86,8 @@ class ProfitCalculatorTest extends TestCase
             ['EUR', 0, 100, 0],
             ['EUR', 1, 1, 50],
             ['EUR', 30, 10, 900],
-            ['USD', 1, 1, 50]
+            ['USD', 1, 1, 50],
+            ['EUR', 2, 1, -50]
         ];
     }
 }
