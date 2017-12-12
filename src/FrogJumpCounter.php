@@ -2,8 +2,8 @@
 
 class FrogJumpCounter
 {
-    public function findMinimalNumberOfJumpsToReachOtherSide($startPosition, $destination, $jumpLength)
+    public function findMinimalNumberOfJumpsToReachOtherSide($startPosition, $destination, $jumpLength): int
     {
-        return ceil(($destination - $startPosition) / $jumpLength);
+        return (int) ceil(($destination - $startPosition) / $jumpLength);
     }
 }
